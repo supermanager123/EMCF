@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电子模因收容所 - 神秘入口</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a0a1a;
+            --secondary: #121230;
+            --accent: #6a0dad;
+            --neon-blue: #00f7ff;
+            --neon-purple: #bd00ff;
+            --text: #e0e0ff;
+            --highlight: #ffffff;
+        }
+
+        :root.light-theme {
+            --primary: #f0f0f7;
+            --secondary: #d0d0e0;
+            --accent: #8a4dcc;
+            --neon-blue: #0088cc;
+            --neon-purple: #7a00cc;
+            --text: #222244;
+            --highlight: #000022;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, var(--primary) 0%, #000 100%);
+            color: var(--text);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(106, 13, 173, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 247, 255, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .light-theme body::before {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(138, 77, 204, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 136, 204, 0.05) 0%, transparent 40%);
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(106, 13, 173, 0.3);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .light-theme .navbar {
+            background: rgba(240, 240, 247, 0.9);
+            border-bottom: 1px solid rgba(138, 77, 204, 0.3);
+        }
+        
+        .navbar.scrolled {
+            padding: 0.5rem 5%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 28px;
+        }
+        
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--secondary);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid var(--neon-purple);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--neon-blue);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--secondary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+            background-color: var(--neon-purple);
+        }
+        
+        .lang-switch {
+            display: flex;
+            background: var(--secondary);
+            border-radius: 30px;
+            padding: 3px;
+            border: 1px solid var(--neon-purple);
+        }
+        
+        .lang-btn {
+            padding: 5px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            background: transparent;
+            color: var(--text);
+            border: none;
+        }
+        
+        .lang-btn.active {
+            background: var(--neon-purple);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--neon-blue);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(106, 13, 173, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .light-theme .hero::before {
+            background: radial-gradient(circle, rgba(138, 77, 204, 0.1) 0%, transparent 70%);
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeUp 1s forwards 0.5s;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(189, 0, 255, 0.5);
+            letter-spacing: 4px;
+            line-height: 1.2;
+        }
+        
+        .logo-subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--neon-blue);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        /* 内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        
+        .section {
+            margin-bottom: 8rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+        }
+        
+        .content-section {
+            background: rgba(10, 10, 26, 0.7);
+            border: 1px solid rgba(106, 13, 173, 0.5);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(106, 13, 173, 0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .light-theme .content-section {
+            background: rgba(240, 240, 247, 0.7);
+            border: 1px solid rgba(138, 77, 204, 0.5);
+            box-shadow: 0 10px 30px rgba(138, 77, 204, 0.2);
+        }
+        
+        .content-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--neon-purple);
+            padding: 1.5rem 0 1.5rem 2rem;
+            margin: 2rem 0;
+            background: rgba(18, 18, 48, 0.4);
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        .light-theme blockquote {
+            background: rgba(208, 208, 224, 0.4);
+        }
+        
+        blockquote p {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .link-card {
+            background: rgba(18, 18, 48, 0.4);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(106, 13, 173, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .light-theme .link-card {
+            background: rgba(208, 208, 224, 0.4);
+            border: 1px solid rgba(138, 77, 204, 0.3);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(106, 13, 173, 0.3);
+            border-color: var(--neon-purple);
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+        }
+        
+        .link-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .link-card p {
+            margin-bottom: 1.5rem;
+            color: rgba(224, 224, 255, 0.8);
+        }
+        
+        .light-theme .link-card p {
+            color: rgba(34, 34, 68, 0.9);
+        }
+        
+        .link-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.8rem 1.5rem;
+            background: rgba(106, 13, 173, 0.2);
+            color: var(--neon-purple);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--neon-purple);
+        }
+        
+        .light-theme .link-card a {
+            background: rgba(138, 77, 204, 0.2);
+        }
+        
+        .link-card a:hover {
+            background: rgba(106, 13, 173, 0.4);
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+        }
+        
+        .notice-box {
+            background: rgba(18, 18, 48, 0.6);
+            border: 1px solid var(--neon-blue);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        .light-theme .notice-box {
+            background: rgba(208, 208, 224, 0.6);
+        }
+        
+        .notice-box::after {
+            content: "⚠️";
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 2rem;
+            background: var(--primary);
+            padding: 0 15px;
+            border-radius: 50%;
+        }
+        
+        .qq-group {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--neon-purple);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            margin: 0 5px;
+            color: var(--highlight);
+        }
+        
+        .light-theme .qq-group {
+            background: rgba(255, 255, 255, 0.4);
+            color: var(--highlight);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .light-theme .back-link {
+            color: white;
+        }
+        
+        .back-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(189, 0, 255, 0.4);
+        }
+        
+        .terminal-text {
+            font-family: monospace;
+            color: var(--neon-blue);
+            border-right: 2px solid var(--neon-blue);
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: blink 0.75s step-end infinite, typing 4s steps(40) 1s forwards;
+            max-width: 100%;
+            font-size: 1.2rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin-top: 1.5rem;
+        }
+        
+        .light-theme .terminal-text {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: rgba(10, 10, 26, 0.9);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(106, 13, 173, 0.3);
+        }
+        
+        .light-theme footer {
+            background: rgba(240, 240, 247, 0.9);
+            border-top: 1px solid rgba(138, 77, 204, 0.3);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            text-align: left;
+        }
+        
+        .footer-column h3 {
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+        }
+        
+        .footer-column p, .footer-column a {
+            color: rgba(224, 224, 255, 0.7);
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .light-theme .footer-column p, 
+        .light-theme .footer-column a {
+            color: rgba(34, 34, 68, 0.8);
+        }
+        
+        .footer-column a:hover {
+            color: var(--neon-blue);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(106, 13, 173, 0.3);
+            color: var(--neon-blue);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .light-theme .social-links a {
+            background: rgba(138, 77, 204, 0.3);
+        }
+        
+        .social-links a:hover {
+            background: var(--neon-purple);
+            transform: translateY(-5px);
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: rgba(224, 224, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        .light-theme .copyright {
+            color: rgba(34, 34, 68, 0.6);
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-blue) }
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px rgba(189, 0, 255, 0.7); }
+            50% { text-shadow: 0 0 20px rgba(189, 0, 255, 0.9), 0 0 30px rgba(189, 0, 255, 0.6); }
+            100% { text-shadow: 0 0 5px rgba(189, 0, 255, 0.7); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .logo-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 26, 0.95);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .nav-links {
+                background: rgba(240, 240, 247, 0.95);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .logo-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 2rem;
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .logo-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero {
+                padding: 0 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+            
+            blockquote {
+                padding: 1rem 0 1rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="#" class="nav-logo">电子模因收容所</a>
+        <div class="nav-controls">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="cn">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+            <div class="nav-links">
+                <a href="#about" data-cn="关于我们" data-en="About">关于我们</a>
+                <a href="#links" data-cn="关键链接" data-en="Links">关键链接</a>
+                <a href="#join" data-cn="加入我们" data-en="Join">加入我们</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="logo">电子模因收容所</h1>
+            <div class="logo-subtitle">Electronic Meme Containment Facility</div>
+            <p class="subtitle" data-cn="监视游戏世界的异常波动 · 追逐一切超自然存在 · 守护虚拟与现实的边界" data-en="Monitoring anomalies in the gaming world · Pursuing all supernatural entities · Guarding the boundary between virtual and reality">监视游戏世界的异常波动 · 追逐一切超自然存在 · 守护虚拟与现实的边界</p>
+        </div>
+        <div class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+    
+    <!-- 内容区域 -->
+    <div class="container">
+        <!-- 关于部分 -->
+        <section id="about" class="section">
+            <h2 class="section-title"><i class="fas fa-crystal-ball"></i> <span data-cn="导语" data-en="Introduction">导语</span></h2>
+            
+            <div class="content-section">
+                <blockquote>
+                    <p data-cn="当不明客户端里的实体开始威胁你的生命——" data-en="When entities in unknown clients threaten your life—">当不明客户端里的实体开始威胁你的生命——</p>
+                    <p data-cn="当自诩「古神」的存在强迫你成为信徒——" data-en="When self-proclaimed 'Ancient Gods' force you to become a follower—">当自诩「古神」的存在强迫你成为信徒——</p>
+                    <p data-cn="当异常被收容后世界看似恢复平静——" data-en="After anomalies are contained, the world seems calm—">当异常被收容后世界看似恢复平静——</p>
+                    <p data-cn="当秘密组织邀你加入，你选择守护秩序还是颠覆规则？" data-en="When a secret organization invites you to join, will you uphold order or subvert the rules?">当秘密组织邀你加入，你选择守护秩序还是颠覆规则？</p>
+                    <p data-cn="当现实崩解，万物坠入虚无与混沌——" data-en="As reality crumbles, all things descend into void and chaos—">当现实崩解，万物坠入虚无与混沌——</p>
+                    <p class="pulse"><strong data-cn="你将如何抉择？" data-en="How will you choose?">你将如何抉择？</strong></p>
+                </blockquote>
+            </div>
+        </section>
+        
+        <!-- 链接部分 -->
+        <section id="links" class="section">
+            <h2 class="section-title"><i class="fas fa-link"></i> <span data-cn="关键链接" data-en="Key Links">关键链接</span></h2>
+            
+            <div class="content-section">
+                <div class="links-grid">
+                    <div class="link-card">
+                        <h3><i class="fab fa-bilibili"></i> <span data-cn="作者B站主页" data-en="Author's Bilibili">作者B站主页</span></h3>
+                        <p data-cn="关注我们的官方B站频道，获取最新模因收容报告和研究视频。" data-en="Follow our official Bilibili channel for the latest meme containment reports and research videos.">关注我们的官方B站频道，获取最新模因收容报告和研究视频。</p>
+                        <a href="https://space.bilibili.com/3546720352865201" target="_blank"><span data-cn="访问频道" data-en="Visit Channel">访问频道</span> <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    
+                    <div class="link-card">
+                        <h3><i class="fas fa-history"></i> <span data-cn="前传系列" data-en="Prequel Series">前传系列</span></h3>
+                        <p data-cn="探索电子模因收容所的前传故事，了解我们组织成立的背景和历史。" data-en="Explore the prequel stories of the Electronic Meme Containment Facility and learn about the background and history of our organization.">探索电子模因收容所的前传故事，了解我们组织成立的背景和历史。</p>
+                        <a href="https://space.bilibili.com/527426741" target="_blank"><span data-cn="查看前传" data-en="View Prequel">查看前传</span> <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    
+                    <div class="link-card">
+                        <h3><i class="fas fa-users"></i> <span data-cn="联合创作" data-en="Collaboration">联合创作</span></h3>
+                        <p data-cn="与Horisystoms团队共同创作的特别项目，探索模因收容的更多可能性。" data-en="Special projects created in collaboration with Horisystoms team, exploring more possibilities of meme containment.">与Horisystoms团队共同创作的特别项目，探索模因收容的更多可能性。</p>
+                        <a href="#"><span data-cn="了解详情" data-en="Learn More">了解详情</span> <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 加入部分 -->
+        <section id="join" class="section">
+            <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> <span data-cn="解密须知" data-en="Decryption Notice">解密须知</span></h2>
+            
+            <div class="content-section">
+                <div class="notice-box">
+                    <p data-cn="多期谜题视频已发布，诚邀探索者加入！" data-en="Multiple puzzle videos have been released, explorers are invited to join!">多期谜题视频已发布，<strong>诚邀探索者加入</strong>！</p>
+                    <p data-cn="🔹 核心解密群：275219509（QQ）" data-en="🔹 Core Decryption Group: 275219509 (QQ)">🔹 <strong data-cn="核心解密群" data-en="Core Decryption Group">核心解密群</strong>：<span class="qq-group">275219509</span>（QQ）</p>
+                    <p data-cn="🔹 剧集难点解析将在此帖同步更新" data-en="🔹 Episode analysis will be updated here">🔹 剧集难点解析将在此帖同步更新</p>
+                    <p data-cn="🔹 返回主贴" data-en="🔹 Return to Main Post">🔹 <a href="https://www.mistarg.cn/topic/114/发布-电子模因收容所-arg" class="back-link"><i class="fas fa-arrow-right"></i> <span data-cn="返回主贴" data-en="Main Post">返回主贴</span> ↗</a></p>
+                </div>
+                
+                <blockquote>
+                    <p data-cn="推开这扇门，你将成为故事的一部分——" data-en="Push open this door, and you will become part of the story—">推开这扇门，你将成为故事的一部分——</p>
+                    <p><em data-cn="电子深渊正在等待你的心跳" data-en="The electronic abyss awaits your heartbeat">电子深渊正在等待你的心跳</em></p>
+                </blockquote>
+                
+                <p class="terminal-text" data-cn="系统状态: 在线 | 监控中: 异常波动 | 访问权限: 授予访问者 | 安全等级: Delta级" data-en="System Status: Online | Monitoring: Anomaly Fluctuations | Access: Granted | Security Level: Delta">系统状态: 在线 | 监控中: 异常波动 | 访问权限: 授予访问者 | 安全等级: Delta级</p>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3 data-cn="关于我们" data-en="About Us">关于我们</h3>
+                <p data-cn="电子模因收容所是一个致力于监控、研究和收容数字世界异常现象的组织。我们保护现实免受虚拟威胁。" data-en="The Electronic Meme Containment Facility is an organization dedicated to monitoring, researching, and containing anomalies in the digital world. We protect reality from virtual threats.">电子模因收容所是一个致力于监控、研究和收容数字世界异常现象的组织。我们保护现实免受虚拟威胁。</p>
+                <div class="social-links">
+                    <a href="https://space.bilibili.com/3546720352865201" target="_blank"><i class="fab fa-bilibili"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 data-cn="快速链接" data-en="Quick Links">快速链接</h3>
+                <a href="#about" data-cn="关于我们" data-en="About">关于我们</a>
+                <a href="#links" data-cn="关键链接" data-en="Links">关键链接</a>
+                <a href="#join" data-cn="加入我们" data-en="Join">加入我们</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3 data-cn="联系方式" data-en="Contact">联系方式</h3>
+                <p><i class="fas fa-envelope"></i> nope </p>
+                <p><i class="fab fa-qq"></i> <span data-cn="官方QQ群" data-en="Official QQ Group">官方QQ群</span>: 275219509</p>
+                <p><i class="fas fa-map-marker-alt"></i> <span data-cn="数字空间 · 第1.12.5扇区 · 模因收容中心" data-en="Digital Space · Sector 1.12.5 · Meme Containment Center">数字空间 · 第1.12.5扇区 · 模因收容中心</span></p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 <span data-cn="电子模因收容所" data-en="Electronic Meme Containment Facility">电子模因收容所</span> | <span data-cn="数据监控系统 v1.2.0" data-en="Data Monitoring System v1.2.0">数据监控系统 v1.2.0</span></p>
+            <p data-cn="警告: 未经授权访问将触发安全协议" data-en="Warning: Unauthorized access will trigger security protocols">警告: 未经授权访问将触发安全协议</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // 滚动时导航栏变化
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // 滚动到元素时的动画
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // 滚动到底部指示器
+            document.querySelector('.scroll-down').addEventListener('click', function() {
+                window.scrollTo({
+                    top: document.querySelector('.container').offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 终端文本动画结束后移除光标
+            const terminalText = document.querySelector('.terminal-text');
+            setTimeout(() => {
+                terminalText.style.animation = "none";
+                terminalText.style.borderRight = "none";
+            }, 5000);
+            
+            // 主题切换功能
+            const themeToggle = document.getElementById('theme-toggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // 检查本地存储或系统偏好
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.documentElement.classList.add('light-theme');
+                themeToggle.checked = true;
+            } else if (currentTheme === null && !prefersDarkScheme.matches) {
+                document.documentElement.classList.add('light-theme');
+                themeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.classList.add('light-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.remove('light-theme');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
+            // 语言切换功能
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const langElements = document.querySelectorAll('[data-cn], [data-en]');
+            
+            // 检查本地存储
+            const currentLang = localStorage.getItem('lang') || 'cn';
+            if (currentLang === 'en') {
+                switchLanguage('en');
+                document.querySelector('.lang-btn[data-lang="en"]').classList.add('active');
+                document.querySelector('.lang-btn[data-lang="cn"]').classList.remove('active');
+            }
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    switchLanguage(lang);
+                    localStorage.setItem('lang', lang);
+                });
+            });
+            
+            function switchLanguage(lang) {
+                langElements.forEach(element => {
+                    if (element.hasAttribute(`data-${lang}`)) {
+                        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.value = element.getAttribute(`data-${lang}`);
+                        } else {
+                            element.textContent = element.getAttribute(`data-${lang}`);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
