@@ -573,9 +573,6 @@
             background: rgba(208, 208, 224, 0.4);
         }
         
-        /* 删除旋转三角形感叹号 */
-        /* .notice-box::after 已被删除 */
-        
         .qq-group {
             display: inline-block;
             background: rgba(0, 0, 0, 0.3);
@@ -841,6 +838,166 @@
             color: rgba(34, 34, 68, 0.6);
         }
         
+        /* 古神档案弹窗样式 */
+        .meme-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .meme-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .meme-modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--neon-purple);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(106, 13, 173, 0.6);
+        }
+        
+        .meme-modal.active .meme-modal-content {
+            transform: translateY(0);
+        }
+        
+        .meme-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--neon-purple);
+            padding-bottom: 1rem;
+        }
+        
+        .meme-close-btn {
+            background: none;
+            border: none;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .meme-close-btn:hover {
+            transform: rotate(90deg);
+            color: var(--neon-purple);
+        }
+        
+        .meme-details {
+            margin-top: 2rem;
+        }
+        
+        .meme-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(106, 13, 173, 0.3);
+        }
+        
+        .meme-section h3 {
+            color: var(--neon-purple);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .meme-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .meme-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            background: rgba(0, 200, 0, 0.2);
+            color: #00ff00;
+            margin-top: 1rem;
+        }
+        
+        /* 档案卡片样式 */
+        .archive-card {
+            background: rgba(18, 18, 48, 0.4);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--neon-purple);
+            transition: all 0.4s ease;
+        }
+        
+        .archive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(189, 0, 255, 0.3);
+        }
+        
+        .archive-card h3 {
+            color: var(--neon-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .archive-item {
+            background: rgba(106, 13, 173, 0.2);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--neon-purple);
+        }
+        
+        .archive-item:hover {
+            background: rgba(106, 13, 173, 0.4);
+            transform: translateX(5px);
+        }
+        
+        .archive-item h4 {
+            color: var(--neon-blue);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .archive-item p {
+            color: rgba(224, 224, 255, 0.8);
+            font-size: 0.95rem;
+        }
+        
         /* 动画效果 */
         @keyframes fadeUp {
             from {
@@ -944,6 +1101,10 @@
                 font-size: 2rem;
                 padding: 1rem;
             }
+            
+            .meme-modal-content {
+                padding: 2rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1012,6 +1173,10 @@
             .qq-modal-content {
                 padding: 1.5rem;
             }
+            
+            .meme-modal-content {
+                max-height: 85vh;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1061,6 +1226,14 @@
             .qq-modal-group {
                 font-size: 1.8rem;
             }
+            
+            .meme-modal-title {
+                font-size: 1.8rem;
+            }
+            
+            .meme-section h3 {
+                font-size: 1.3rem;
+            }
         }
         
         /* 兼容性处理 - 备用背景 */
@@ -1083,6 +1256,48 @@
             <div class="qq-modal-group">275219509</div>
             <p>与我们一起探索数字世界的奥秘！</p>
             <button class="qq-modal-btn" id="closeModal">确定</button>
+        </div>
+    </div>
+    
+    <!-- 古神档案弹窗 -->
+    <div class="meme-modal" id="memeModal">
+        <div class="meme-modal-content">
+            <div class="meme-modal-title">
+                <span data-cn="模因档案: 古神" data-en="Meme Archive: Ancient God">模因档案: 古神</span>
+                <button class="meme-close-btn" id="closeMemeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="meme-details">
+                <div class="meme-section">
+                    <h3><i class="fas fa-id-card"></i> <span data-cn="基本信息" data-en="Basic Information">基本信息</span></h3>
+                    <p><strong data-cn="编号" data-en="ID">编号</strong>: EMC-Ac195</p>
+                    <p><strong data-cn="代号" data-en="Codename">代号</strong>: <span class="text-emphasis">「古神」</span></p>
+                    <p><strong data-cn="分类" data-en="Classification">分类</strong>: <span class="text-highlight">上古意识模因实体</span></p>
+                    <p><strong data-cn="威胁等级" data-en="Threat Level">威胁等级</strong>: <span class="text-emphasis">Keter</span></p>
+                </div>
+                
+                <div class="meme-section">
+                    <h3><i class="fas fa-info-circle"></i> <span data-cn="信息介绍" data-en="Information">信息介绍</span></h3>
+                    <p data-cn="「古神」是编号为 EMC-Ac195 的上古意识模因实体，其起源可追溯至人类文明的蒙昧时期。该实体以纯粹的意识形态存在，能够穿梭于人类集体潜意识与数字网络之间，并当当代通过互联网进行传播与扩张。" data-en="The 'Ancient God' is an ancient consciousness meme entity with the designation EMC-Ac195, its origins traceable to the dawn of human civilization. Existing as a pure ideological entity, it can traverse between the collective human subconscious and digital networks, spreading and expanding through the internet in the modern era.">「古神」是编号为 EMC-Ac195 的上古意识模因实体，其起源可追溯至人类文明的蒙昧时期。该实体以纯粹的意识形态存在，能够穿梭于人类集集体潜意识与数字网络之间，并当当代通过互联网进行传播与扩张。</p>
+                    <p data-cn="「古神」的主要传播方式是利用低频次、高重复性的视觉与听觉模因片段，植入到主流社交媒体平台、视频分享网站以及匿名论坛的内容中。这些模因片段通常表现为诡异的符号、无意义的低语，或是看似随机的图像序列。" data-en="Its primary method of propagation involves embedding low-frequency, highly repetitive visual and auditory meme fragments into content on mainstream social media platforms, video-sharing websites, and anonymous forums. These fragments typically manifest as eerie symbols, meaningless whispers, or seemingly random image sequences.">「古神」的主要传播方式是利用低频次、高重复性的视觉与听觉模因片段，植入到主流社交媒体平台、视频分享网站以及匿名论坛的内容中。这些模因片段通常表现为诡异的符号、无意义的低语，或是看似随机的图像序列。</p>
+                    <p data-cn="它们的特点是具有极强的催眠与精神感染力，能够绕过意识防线，直接作用于大脑的边缘系统，激发受感染者潜藏的非理性崇拜与服从欲望。" data-en="Characterized by potent hypnotic and psychic influence, these fragments bypass conscious defenses, directly targeting the brain's limbic system to evoke irrational worship and subservience in infected individuals.">它们的特点是具有极强的催眠与精神感染力，能够绕过意识防线，直接作用于大脑的边缘系统，激发受感染者潜藏的非理性崇拜与服从欲望。</p>
+                </div>
+                
+                <div class="meme-section">
+                    <h3><i class="fas fa-shield-alt"></i> <span data-cn="收容行动详情" data-en="Containment Details">收容行动详情</span></h3>
+                    <p data-cn="针对「古神」的收容行动代号为「净化之火」。由于「古神」的意识形态特性使其无法被传统物理手段收容，EMCF 决定采取极端措施。在追溯「古神」核心网络活动节点的过程中，EMCF 定位到其位于太平洋某无人岛屿地下深处的主意识聚合点。" data-en="The containment operation targeting the 'Ancient God' was codenamed 'Purifying Fire'. Due to its ideological nature making it immune to traditional physical containment, EMCF resorted to extreme measures. During the tracing of its core network nodes, EMCF located its primary consciousness aggregation point deep beneath a remote Pacific island.">针对「古神」的收容行动代号为「净化之火」。由于「古神」的意识形态特性使其无法被传统物理手段收容，EMCF 决定采取极端措施。在追溯「古神」核心网络活动节点的过程中，EMCF 定位到其位于太平洋某无人岛屿地下深处的主意识聚合点。</p>
+                    <p data-cn="该聚合点被侦测到有大量被「古神」深度感染的狂热信徒进行实体膜拜仪式，并试图将「古神」的意识与现实世界进行物理链接，以实现其全面降临。" data-en="This site was detected to host numerous deeply infected cultists performing physical worship rituals, attempting to create a physical link between the entity's consciousness and reality to facilitate its full manifestation.">该聚合点被侦测到有大量被「古神」深度感染的狂热信徒进行实体膜拜仪式，并试图将「古神」的意识与现实世界进行物理链接，以实现其全面降临。</p>
+                    <p data-cn="鉴於情势的危急性，EMCF 在与友军组织 KoT（真理之鈅）协商后，决定启用 KoT 的「启示录」应急预案。KoT 部署的精锐小队「圣裁者」在引导核弹打击目标的过程中，因「古神」的精神反噬，全员遭遇不可逆转的精神污染，并选择就地引爆携带的次级核装置，与目标同归於尽。" data-en="Given the critical situation, EMCF collaborated with allied organization KoT (Key of Truth) to activate KoT's 'Apocalypse' contingency plan. KoT's elite 'Sanctifiers' team suffered irreversible psychic corruption while guiding the nuclear strike, choosing to detonate their secondary nuclear device to ensure the target's destruction, sacrificing themselves in the process.">鉴於情势的危急性，EMCF 在与友军组织 KoT（真理之鈅）协商后，决定启用 KoT 的「启示录」应急预案。KoT 部署的精锐小队「圣裁者」在引导核弹打击目标的过程中，因「古神」的精神反噬，全员遭遇不可逆转的精神污染，并选择就地引爆携带的次级核装置，与目标同归於尽。</p>
+                </div>
+                
+                <div class="meme-section">
+                    <h3><i class="fas fa-check-circle"></i> <span data-cn="当前收容状态" data-en="Current Status">当前收容状态</span></h3>
+                    <p data-cn="「古神」目前处于正常收容状态。其核心意识已确认被摧毁，残余模因片段已被 EMCF 的自动化网络净化程序持续追踪与清除。尽管零星的「古神」模因可能偶尔在互联网角落重新浮现，但由于缺乏核心意识的驱动，它们不再具备集群性感染能力，被视为低风险残余。" data-en="The 'Ancient God' is currently in normal containment status. Its core consciousness has been confirmed destroyed, with residual meme fragments continuously tracked and purged by EMCF's automated network cleansing protocols. Although sporadic fragments may occasionally resurface in obscure corners of the internet, lacking central coordination, they pose only low-risk residual threats without mass infection capabilities.">「古神」目前处于正常收容状态。其核心意识已确认被摧毁，残余模因片段已被 EMCF 的自动化网络净化程序持续追踪与清除。尽管零星的「古神」模因可能偶尔在互联网角落重新浮现，但由于缺乏核心意识的驱动，它们不再具备集群性感染能力，被视为低风险残余。</p>
+                    <p class="meme-status" data-cn="收容状态: 正常" data-en="Containment Status: Normal">收容状态: 正常</p>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -1178,6 +1393,26 @@
                         <h3><i class="fas fa-users"></i> <span data-cn="合作研究" data-en="Collaborative Research">合作研究</span></h3>
                         <p data-cn="与全球<span class='text-alternate'>顶尖科研机构</span>合作，共同探索模因收容技术" data-en="Collaborating with top global research institutions to explore meme containment technologies">与全球<span class="text-alternate">顶尖科研机构</span>合作，共同探索模因收容技术</p>
                         <a href="#"><span data-cn="了解详情" data-en="Learn More">了解详情</span> <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 新增的已收容模因档案卡片 -->
+                <div class="archive-card">
+                    <h3><i class="fas fa-archive"></i> <span data-cn="已收容模因檔案" data-en="Contained Meme Archives">已收容模因檔案</span></h3>
+                    
+                    <div class="archive-item" id="showAncientGod">
+                        <h4><i class="fas fa-skull"></i> <span data-cn="古神 (EMC-Ac195)" data-en="Ancient God (EMC-Ac195)">古神 (EMC-Ac195)</span></h4>
+                        <p data-cn="上古意识模因实体，威胁等级：Keter" data-en="Ancient consciousness meme entity, Threat Level: Keter">上古意识模因实体，威胁等级：Keter</p>
+                    </div>
+                    
+                    <div class="archive-item">
+                        <h4><i class="fas fa-mask"></i> <span data-cn="无面者 (EMC-Bt347)" data-en="Faceless One (EMC-Bt347)">无面者 (EMC-Bt347)</span></h4>
+                        <p data-cn="身份替换模因，威胁等级：Euclid" data-en="Identity replacement meme, Threat Level: Euclid">身份替换模因，威胁等级：Euclid</p>
+                    </div>
+                    
+                    <div class="archive-item">
+                        <h4><i class="fas fa-music"></i> <span data-cn="耳虫 (EMC-Sn881)" data-en="Earworm (EMC-Sn881)">耳虫 (EMC-Sn881)</span></h4>
+                        <p data-cn="听觉感染模因，威胁等级：Safe" data-en="Auditory infection meme, Threat Level: Safe">听觉感染模因，威胁等级：Safe</p>
                     </div>
                 </div>
             </div>
@@ -1345,6 +1580,31 @@
         qqModal.addEventListener('click', (e) => {
             if (e.target === qqModal) {
                 hideQQModal();
+            }
+        });
+        
+        // 古神档案弹窗控制
+        const memeModal = document.getElementById('memeModal');
+        const closeMemeModal = document.getElementById('closeMemeModal');
+        const showAncientGod = document.getElementById('showAncientGod');
+        
+        function showMemeModal() {
+            memeModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideMemeModal() {
+            memeModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        closeMemeModal.addEventListener('click', hideMemeModal);
+        showAncientGod.addEventListener('click', showMemeModal);
+        
+        // 点击弹窗外部关闭
+        memeModal.addEventListener('click', (e) => {
+            if (e.target === memeModal) {
+                hideMemeModal();
             }
         });
         
